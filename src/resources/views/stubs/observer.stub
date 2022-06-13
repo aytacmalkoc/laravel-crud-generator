@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\{{className}};
+
+class {{className}}Observer
+{
+    /**
+     * Handle the User "created" event.
+     *
+     * @param  \App\Models\{{className}} ${{classNameLower}}
+     * @return void
+     */
+    public function created({{className}} ${{classNameLower}})
+    {
+        //
+    }
+
+    /**
+     * Handle the User "updated" event.
+     *
+     * @param  \App\Models\{{className}} ${{classNameLower}}
+     * @return void
+     */
+    public function updated({{className}} ${{classNameLower}})
+    {
+        //
+    }
+
+    /**
+     * Handle the User "deleted" event.
+     *
+     * @param  \App\Models\{{className}} ${{classNameLower}}
+     * @return void
+     */
+    public function deleted({{className}} ${{classNameLower}})
+    {
+        //
+    }
+
+    /**
+     * Handle the User "restored" event.
+     *
+     * @param  \App\Models\{{className}} ${{classNameLower}}
+     * @return void
+     */
+    public function restored({{className}} ${{classNameLower}})
+    {
+        //
+    }
+
+    /**
+     * Handle the User "forceDeleted" event.
+     *
+     * @param  \App\Models\{{className}} ${{classNameLower}}
+     * @return void
+     */
+    public function forceDeleted({{className}} ${{classNameLower}})
+    {
+        //
+    }
+}
