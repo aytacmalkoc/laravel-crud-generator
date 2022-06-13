@@ -5,6 +5,7 @@
         "aytacmalkoc",
         "laravel-crud-generator"
     ],
+    "minimum-stability": "stable",
     "homepage": "https://github.com/aytacmalkoc/laravel-crud-generator",
     "license": "MIT",
     "type": "library",
