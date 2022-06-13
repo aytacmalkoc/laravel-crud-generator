@@ -1,10 +1,9 @@
-# Very short description of the package
+# Laravel CRUD Generator
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/aytacmalkoc/laravel-crud-generator.svg?style=flat-square)](https://packagist.org/packages/aytacmalkoc/laravel-crud-generator)
 [![Total Downloads](https://img.shields.io/packagist/dt/aytacmalkoc/laravel-crud-generator.svg?style=flat-square)](https://packagist.org/packages/aytacmalkoc/laravel-crud-generator)
-![GitHub Actions](https://github.com/aytacmalkoc/laravel-crud-generator/actions/workflows/main.yml/badge.svg)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+This package provides a single command to create all CRUD operations in Laravel applications.
 
 ## Installation
 
@@ -17,14 +16,14 @@ composer require aytacmalkoc/laravel-crud-generator
 ## Usage
 
 ```php
-// Usage description here
+php artisan make:crud Product
 ```
 
-### Testing
+## Generated files
 
-```bash
-composer test
-```
+| Controllers       | Requests        | Models  | Observers       | Factories      | Migrations            | Seeders       | Views                           | Routes  |
+|-------------------|-----------------|---------|-----------------|----------------|-----------------------|---------------|---------------------------------|---------|
+| ProductController | ProductRequests | Product | ProductObserver | ProductFactory | create_products_table | ProductSeeder | index, show, edit, create files | web.php |
 
 ### Changelog
 
@@ -46,7 +45,3 @@ If you discover any security related issues, please email desgaytacmalkoc@gmail.
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
