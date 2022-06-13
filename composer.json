@@ -1,0 +1,54 @@
+{
+    "name": "aytacmalkoc/laravel-crud-generator",
+    "description": "Basic CRUD generator for Laravel 8.x applications.",
+    "keywords": [
+        "aytacmalkoc",
+        "laravel-crud-generator"
+    ],
+    "homepage": "https://github.com/aytacmalkoc/laravel-crud-generator",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Aytac Malkoc",
+            "email": "desgaytacmalkoc@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aytacmalkoc\\LaravelCrudGenerator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aytacmalkoc\\LaravelCrudGenerator\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aytacmalkoc\\LaravelCrudGenerator\\LaravelCrudGeneratorServiceProvider"
+            ],
+            "aliases": {
+                "LaravelCrudGenerator": "Aytacmalkoc\\LaravelCrudGenerator\\LaravelCrudGeneratorFacade"
+            }
+        }
+    }
+}
