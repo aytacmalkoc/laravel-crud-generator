@@ -40,6 +40,8 @@ class LaravelCrudGenerator
         $this->createRequest();
         $this->createObserver();
         $this->createMigration();
+        $this->createFactory();
+        $this->createSeeder();
         $this->createRoute();
     }
 
