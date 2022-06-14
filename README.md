@@ -19,6 +19,14 @@ composer require aytacmalkoc/laravel-crud-generator
 php artisan make:crud Product
 ```
 
+## Options
+
+The --auth option can be used to add auth middleware to requests and routes.
+
+```bash
+php artisan make:crud Product --auth
+```
+
 ## Generated files
 
 | Controllers       | Requests        | Models  | Observers       | Factories      | Migrations            | Seeders       | Views                           | Routes  |
