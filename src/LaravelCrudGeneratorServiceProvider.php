@@ -33,8 +33,8 @@ class LaravelCrudGeneratorServiceProvider extends ServiceProvider
     public function register()
     {
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-crud-generator', function ($name) {
-            return new LaravelCrudGenerator($name);
+        $this->app->singleton('laravel-crud-generator', function ($name, $auth) {
+            return new LaravelCrudGenerator($name, $auth);
         });
     }
 }
