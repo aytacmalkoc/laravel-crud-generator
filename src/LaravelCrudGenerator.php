@@ -10,11 +10,26 @@ class LaravelCrudGenerator
 {
     protected string $name;
 
+    protected bool $auth;
+
+    protected array $paths;
+
     protected array $views = ['index', 'show', 'create', 'edit'];
 
-    public function __construct(string $name)
+    public function __construct(string $name, bool $auth = false)
     {
         $this->name = $name;
+        $this->auth = $auth;
+
+        $this->paths = [
+            'controller' => controller_path($this->name . 'Controller.php'),
+            'model' => model_path($this->name . 'Model.php'),
+            'request' => request_path($this->name . 'Request.php'),
+            'migration' => 'create_' . strtolower($this->name) . '_table',
+            'seeder' => $this->name . 'Seeder',
+            'factory' => $this->name . 'Factory',
+            'observer' => observer_path($this->name . 'Observer')
+        ];
     }
 
     public function create()
@@ -23,14 +38,14 @@ class LaravelCrudGenerator
         $this->createModel();
         $this->createViews();
         $this->createRequest();
-        $this->createMigration();
         $this->createObserver();
+        $this->createMigration();
         $this->createRoute();
     }
 
     protected function getStub($name): bool|string
     {
-        return file_get_contents(resource_path("views/laravel-crud-generator/stubs/{$name}.stub"));
+        return file_get_contents(__DIR__ . "/stubs/{$name}.stub");
     }
 
     protected function createTemplate(array $find, array $replace, string $stubName): string
@@ -52,7 +67,7 @@ class LaravelCrudGenerator
             'Controller'
         );
 
-        file_put_contents(app_path("Http/Controllers/{$this->name}Controller.php"), $template);
+        file_put_contents($this->paths['controller'], $template);
     }
 
     protected function createModel(): void
@@ -67,7 +82,7 @@ class LaravelCrudGenerator
             'Model'
         );
 
-        file_put_contents(app_path("Models/{$this->name}.php"), $template);
+        file_put_contents($this->paths['model'], $template);
     }
 
     protected function createViews(): void
@@ -91,30 +106,38 @@ class LaravelCrudGenerator
         $template = $this->createTemplate(
             [
                 '{{className}}',
+                '{{auth}}'
             ],
             [
                 $this->name,
+                $this->auth
             ],
             'Request'
         );
 
-        $path = app_path('Http/Requests');
-
-        if (!file_exists($path))
+        if (!file_exists(request_path()))
         {
-            mkdir($path, 0777);
+            mkdir(request_path(), 0777);
         }
 
-        file_put_contents("$path/{$this->name}Request.php", $template);
+        file_put_contents($this->paths['request'], $template);
     }
 
     protected function createMigration(): void
     {
         $plural = Str::plural(strtolower($this->name));
 
-        Artisan::call("make:migration create_{$plural}_table --create");
-        Artisan::call("make:factory {$this->name}Factory");
-        Artisan::call("make:seeder {$this->name}Seeder");
+        Artisan::call("make:migration {$this->paths['migration']} --create");
+    }
+
+    protected function createSeeder()
+    {
+        Artisan::call("make:seeder {$this->paths['seeder']}");
+    }
+
+    protected function createFactory()
+    {
+        Artisan::call("make:factory {$this->paths['factory']}");
     }
 
     protected function createObserver(): void
@@ -131,14 +154,12 @@ class LaravelCrudGenerator
             'Observer'
         );
 
-        $path = app_path("Observers");
-
-        if (!file_exists($path))
+        if (!file_exists(observer_path()))
         {
-            mkdir($path, 0777);
+            mkdir(observer_path(), 0777);
         }
 
-        file_put_contents("{$path}/{$this->name}Observer.php", $template);
+        file_put_contents($this->paths['observer'], $template);
     }
 
     protected function createRoute()
@@ -146,7 +167,12 @@ class LaravelCrudGenerator
         $name = strtolower($this->name);
         $controller = 'App\Http\Controllers\\' . $this->name . 'Controller::class';
 
-        $route = "Route::resource('/{$name}', $controller);";
+        $route = "Route::resource('/{$name}', $controller);\n";
+
+        if ($this->auth)
+        {
+            $route = Str::replaceLast(";", "->middleware('auth');", $route);
+        }
 
         File::append(base_path('routes/web.php'), $route);
     }
