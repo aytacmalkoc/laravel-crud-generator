@@ -12,7 +12,7 @@ class CrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud {name : Name of the class}';
+    protected $signature = 'make:crud {name} {--auth}';
 
     /**
      * The console command description.
@@ -28,10 +28,10 @@ class CrudCommand extends Command
      */
     public function handle()
     {
-        $generator = new LaravelCrudGenerator($this->argument('name'));
+        $generator = new LaravelCrudGenerator($this->argument('name'), $this->option('auth'));
 
         $generator->create();
 
-        return 0;
+        return 1;
     }
 }
